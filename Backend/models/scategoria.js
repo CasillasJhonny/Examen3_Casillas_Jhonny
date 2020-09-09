@@ -36,8 +36,21 @@ Scategoria.getAll = result => {
   });
 };
 
+Scategoria.getCategoria = result => {
+  sql.query("SELECT * FROM categoria", (err, res) => {
+    if (err) {
+      console.log("error:", err);
+      result(null, err);
+      return;
+    }
+    console.log("categoria:", res);
+    result(null, res);
+  });
+};
+
+
 Scategoria.findById = (cod_sub_categoria, result) => {
-  sql.query(`SELECT * FROM SUBCATEGORIA WHERE COD_SUB_CATEGORIA= '${cod_sub_categoria}'`, (err, res) => {
+  sql.query(`SELECT * FROM SUBCATEGORIA WHERE COD_CATEGORIA= '${cod_sub_categoria}'`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

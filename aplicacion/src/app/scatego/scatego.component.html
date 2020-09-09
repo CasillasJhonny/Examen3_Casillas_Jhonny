@@ -1,13 +1,23 @@
+
+<div class="card-body">
+    <div class="select">
+    
+        <input pInputText type="text" (input)="scatego.filterGlobal($event.target.value, 'contains')" placeholder="Filtro" />
+        
+    </div>
+</div>
 <div class="ui-g">
     <p-toast></p-toast>
     
     <p-confirmDialog header="Confirmación" acceptLabel="Si" rejectLabel="No" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-    <p-panel header="examen" [style]="{width: '70%', margin: '0 auto'}">
+    <p-panel header="examen" [style]="{width: '100%', margin: '0 auto'}">
         <div style="margin-bottom: 20px">
             <p-menubar [model]="items"></p-menubar>
         </div>
-        <p-table [value]="personas" [columns]="cols" [responsive]="true" selectionMode="single" [(selection)]="selectedPersona"
-            dataKey="COD_SUB_CATEGORIA" [paginator]="true" [rows]="15">
+      
+        <p-table [value]="scategos" [columns]="cols" [responsive]="true" selectionMode="single" [(selection)]="selectedScatego"
+            dataKey="COD_SUB_CATEGORIA" [paginator]="true" [rows]="10" [globalFilterFields]="['NOMBRE']">
+            
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -16,24 +26,25 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-persona let-columns="columns">
-                <tr [pSelectableRow]="persona">
+            <ng-template pTemplate="body" let-scategos let-columns="columns">
+                <tr [pSelectableRow]="scategos">
                     <td *ngFor="let col of columns">
-                        {{persona[col.field]}}
+                        {{scategos[col.field]}}
                     </td>
                 </tr>
             </ng-template>
         </p-table>
     </p-panel>
-    <p-dialog header="Persona" [responsive]="true" [style]="{width: '500px'}" [(visible)]="displaySaveDialog"
+    <p-dialog header="SUB-CATEGORIA" [responsive]="true" [style]="{width: '500px'}" [(visible)]="displaySaveDialog"
         [modal]="true">
+      
         <div class="ui-g ui-fluid">
              <div class="ui-g-12">
                <div class="ui-g-4">
                     <label for="COD_SUB_CATEGORIA">COD_SUB_CATEGORIA</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="COD_SUB_CATEGORIA" [(ngModel)]="persona.COD_SUB_CATEGORIA" />
+                    <input pInputText id="COD_SUB_CATEGORIA" [(ngModel)]="scatego.COD_SUB_CATEGORIA" />
                 </div>
             </div>
             <div class="ui-g-12">
@@ -41,7 +52,10 @@
                      <label for="COD_CATEGORIA">COD_CATEGORIA</label>
                  </div>
                  <div class="ui-g-8">
-                     <input pInputText id="COD_CATEGORIA" [(ngModel)]="persona.COD_CATEGORIA" />
+                    <select [(ngModel)]="scatego.COD_CATEGORIA" (change)="onChange(selectedOption)" class="form-control col-lg-8">
+                        <option *ngFor="let categorie of categories" [ngValue]="categorie.COD_CATEGORIA">{{ categorie.DESCRIPCION }}</option>
+                    </select>
+                     <!-- <input pInputText id="COD_CATEGORIA" [(ngModel)]="scategos.COD_CATEGORIA" /> -->
                  </div>
              </div>
             <div class="ui-g-12">
@@ -49,7 +63,7 @@
                     <label for="NOMBRE">Nombre</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="NOMBRE" [(ngModel)]="persona.NOMBRE" />
+                    <input pInputText id="NOMBRE" [(ngModel)]="scatego.NOMBRE" />
                 </div>
             </div>
             <div class="ui-g-12">
@@ -57,7 +71,7 @@
                     <label for="DESCRIPCION">DESCRIPCION</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="DESCRIPCION" [(ngModel)]="persona.DESCRIPCION" />
+                    <input pInputText id="DESCRIPCION" [(ngModel)]="scatego.DESCRIPCION" />
                 </div>
             </div>
             <div class="ui-g-12">
@@ -65,7 +79,8 @@
                     <label for="FECHA_CREACION">FECHA_CREACION</label>
                 </div>
                 <div class="ui-g-8">
-                    <input  type="date"  id="FECHA_CREACION" [(ngModel)]="persona.FECHA_CREACION" />
+                    <input  type="date"  id="FECHA_CREACION" [(ngModel)]="scatego.FECHA_CREACION" />
+                
                     
                 </div>
             </div>

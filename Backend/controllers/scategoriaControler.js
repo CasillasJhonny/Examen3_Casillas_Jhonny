@@ -36,6 +36,19 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findCatego = (req, res) => {
+    Scategoria.getCategoria((err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving aspirantes."
+            });
+        else res.send(data);
+    });
+};
+
+
+
 exports.findOne = (req, res) => {
     Scategoria.findById(req.params.cod_sub_categoria, (err, data) => {
         if (err) {
